@@ -1,0 +1,29 @@
+{
+  "name": "banker",
+  "version": "1.0.0",
+  "description": "Banker is an online banking service own and manage by the Central Bank of Genesys (CBG). It is a platform made solely for providing secured and seamless banking services for customers.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "banker",
+    "learnable21",
+    "Genesys",
+    "banking"
+  ],
+  "author": "Joshua Chinwendu",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
