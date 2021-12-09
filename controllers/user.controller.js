@@ -2,27 +2,45 @@ const User = require('../models/user.model');
 const asyncHandler = require('express-async-handler');
 const generateToken = require('../utils/generateToken');
 
+/*
+Admins are the ones that can Create, Read, Update and Delete accounts of users
+Authenticated Users cans View and Update their profiles
+*/
+
 
 // @description     Register a new user
 // @route           POST /api/users
-// @access          Public
+// @access          Admin
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body
+  const { firstname, lastname, othername, email, gender, dob, phone,  active, isAdmin, password } = req.body
   const userExists = await User.findOne({ email })
   if (userExists) {
     res.status(400)
     throw new Error('User already exists')
   }
   const user = await User.create({
-    name,
+    firstname,
+    lastname,
+    othername,
     email,
-    password,
+    gender,
+    dob, 
+    phone, 
+    active, 
+    isAdmin, 
+    password
   })
   if (user) {
     res.status(201).json({
       _id: user._id,
-      name: user.name,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      othername: user.othername,
       email: user.email,
+      phone: user.phone,
+      gender: user.gender,
+      dob: user.dob,
+      isAdmin: user.isAdmin,
       token: generateToken(user._id),
     })
   } else {
@@ -41,7 +59,7 @@ const getUsers = asyncHandler(async (req, res) => {
 
 // @desc    Get user by ID
 // @route   GET /api/users/:id
-// @access Authenticated user/Admin
+// @access Admin
 const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id).select('-password')
 
@@ -55,20 +73,32 @@ const getUserById = asyncHandler(async (req, res) => {
 
 // @desc    Update user
 // @route   PUT /api/users/:id
-// @access  Authenticated user/Admin
+// @access  Admin
 const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id)
 
   if (user) {
-    user.name = req.body.name || user.name
+    user.firstname = req.body.firstname || user.firstname
+    user.lastname = req.body.lastname || user.lastname
+    user.othername = req.body.othername || user.othername
+    user.dob = req.body.dob || user.dob
+    user.gender = req.body.gender || user.gender
+    user.phone = req.body.phone || user.phone
+    user.active = req.body.active || user.active
+    user.isAdmin = req.body.isAdmin || user.isAdmin
     user.email = req.body.email || user.email
 
     const updatedUser = await user.save()
 
     res.json({
       _id: updatedUser._id,
-      name: updatedUser.name,
+      firstname: updatedUser.firstname,
+      lastname: updatedUser.lastname,
+      othername: updatedUser.othername,
       email: updatedUser.email,
+      phone: updatedUser.phone,
+      gender: updatedUser.gender,
+      dob: updatedUser.dob,
       isAdmin: updatedUser.isAdmin,
     })
   } else {
@@ -80,7 +110,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
 // @desc    Delete user
 // @route   DELETE /api/users/:id
-// @access  Authenticated user/Admin
+// @access  Admin
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id)
 
@@ -103,8 +133,15 @@ const authUser = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,
-      name: user.name,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      othername: user.othername,
       email: user.email,
+      phone: user.phone,
+      gender: user.gender,
+      dob: user.dob,
+      isAdmin: user.isAdmin,
+      active: user.active,
       token: generateToken(user._id),
     })
   } else {
@@ -122,8 +159,15 @@ const getUserProfile = asyncHandler(async (req, res) => {
   if (user) {
     res.json({
       _id: user._id,
-      name: user.name,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      othername: user.othername,
       email: user.email,
+      phone: user.phone,
+      gender: user.gender,
+      dob: user.dob,
+      isAdmin: user.isAdmin,
+      active: user.active,
     })
   } else {
     res.status(404)
@@ -139,8 +183,16 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
 
   if (user) {
-    user.name = req.body.name || user.name
+    user.firstname = req.body.firstname || user.firstname
+    user.lastname = req.body.lastname || user.lastname
+    user.othername = req.body.othername || user.othername
+    user.dob = req.body.dob || user.dob
+    user.gender = req.body.gender || user.gender
+    user.phone = req.body.phone || user.phone
+    user.active = req.body.active || user.active
+    user.isAdmin = req.body.isAdmin || user.isAdmin
     user.email = req.body.email || user.email
+
     if (req.body.password) {
       user.password = req.body.password
     }
@@ -149,8 +201,15 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
     res.json({
       _id: updatedUser._id,
-      name: updatedUser.name,
+      firstname: updatedUser.firstname,
+      lastname: updatedUser.lastname,
+      othername: updatedUser.othername,
       email: updatedUser.email,
+      phone: updatedUser.phone,
+      gender: updatedUser.gender,
+      dob: updatedUser.dob,
+      active: updatedUser.active,
+      isAdmin: updatedUser.isAdmin,
       token: generateToken(updatedUser._id),
     })
   } else {

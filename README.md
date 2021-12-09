@@ -12,3 +12,14 @@ Customer can contact the Admin to:
 -- Delete their account (Delete Users).
 -- Reverse transactions/transfer in the case their is any mistake.
 -- Disable a user account-> This can be done in the case there is any fruadulent activities detected on the account.
+
+Sample User Logins:
+
+admin@banker.com (Admin)
+1234abcd
+
+joshua@example.com (Customer)
+1234abcd
+
+jerry@example.com (Customer)
+1234abcd

@@ -25,7 +25,7 @@ const UserSchema = mongoose.Schema(
     },
     dob: {
       type: Date,
-      require: true,
+      required: true,
       default: Date.now,
     },
     password: {
@@ -36,7 +36,7 @@ const UserSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    active: { 
+    isActive: { 
       type: Boolean,
       required: true,
       default: true
