@@ -12,7 +12,7 @@ Authenticated Users cans View and Update their profiles
 // @route           POST /api/users
 // @access          Admin
 const registerUser = asyncHandler(async (req, res) => {
-  const { firstname, lastname, othername, email, gender, dob, phone,  active, isAdmin, password } = req.body
+  const { firstname, lastname, othername, email, gender, dob, phone,  active, isAdmin, password, balance } = req.body
   const userExists = await User.findOne({ email })
   if (userExists) {
     res.status(400)
@@ -25,7 +25,8 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     gender,
     dob, 
-    phone, 
+    phone,
+    balance, 
     active, 
     isAdmin, 
     password
@@ -40,6 +41,7 @@ const registerUser = asyncHandler(async (req, res) => {
       phone: user.phone,
       gender: user.gender,
       dob: user.dob,
+      balance: user.balance,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
     })
