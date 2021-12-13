@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const DepositSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
+    required: [true, 'Deposit must be performed by a particular user'],
     ref: 'User',
   },
   amount: { type: Number, required: true, default: 0.0 },

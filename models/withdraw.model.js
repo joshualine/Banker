@@ -1,25 +1,19 @@
 const mongoose = require('mongoose');
 
-const accountSchema = mongoose.Schema(
-  {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'User',
-    },
-    balance: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
+const WithdrawSchema = mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User',
   },
-  {
-    timestamps: true,
-  }
-)
+  amount: { type: Number, required: true, default: 0.0 },
 
-const Account = mongoose.model('Account', accountSchema)
+  isSuccesful: {
+    type: Boolean,
+    required: true,
+    default: true,
+  },
+  transactionTime: { type: Date, required: true, default: Date.now },
+});
 
-module.exports = {
-  Account
-}
+module.exports = mongoose.model("Withdraw", WithdrawSchema);

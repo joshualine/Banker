@@ -7,17 +7,15 @@ const {
 const router = require("express").Router();
 const { protected, admin } = require('../middlewares/auth.middleware');
 
-//Add Deposit
+//Add Deposit   //Get all deposits done by the user
 router.route('/')
-  .post(createDeposit);
-
-//Get All Deposit
-router.route('/:user_id')
-  .get(getDeposits)
+  .post(createDeposit)
+  .get(protected, getDeposits);
 
 //Get A Specified Deposit
 router.route('/:id')
   .get(getDepositById);
+
 
 
 module.exports = router;

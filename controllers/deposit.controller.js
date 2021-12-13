@@ -29,7 +29,7 @@ const createDeposit = asyncHandler(async (req, res) => {
 
 // @desc    Get deposit by ID
 // @route   GET /api/deposits/:id
-// @access  Private
+// @access  Authenticated user/admin
 const getDepositById = asyncHandler(async (req, res) => {
   const deposit = await Deposit.findById(req.params.id).populate(
     'user',
@@ -49,13 +49,15 @@ const getDepositById = asyncHandler(async (req, res) => {
 // @route   GET /api/deposits/:user_id
 // @access  Authenticated user/Admin
 const getDeposits = asyncHandler(async (req, res) => {
-  const deposits = await Deposit.find({}).populate('user', 'firstname')
+  const deposits = await Deposit.find({ user: req.user._id})
+    .populate('user', 'firstname')
   res.json(deposits)
 })
+
 
 module.exports = {
   createDeposit,
   getDepositById,
-  getDeposits
+  getDeposits,
   
 }

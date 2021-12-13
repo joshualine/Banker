@@ -12,7 +12,7 @@ Authenticated Users cans View and Update their profiles
 // @route           POST /api/users
 // @access          Admin
 const registerUser = asyncHandler(async (req, res) => {
-  const { firstname, lastname, othername, email, gender, dob, phone,  active, isAdmin, password, balance } = req.body
+  const { firstname, lastname, othername, email, gender, dob, phone,  isActive, isAdmin, password, balance } = req.body
   const userExists = await User.findOne({ email })
   if (userExists) {
     res.status(400)
@@ -27,7 +27,7 @@ const registerUser = asyncHandler(async (req, res) => {
     dob, 
     phone,
     balance, 
-    active, 
+    isActive, 
     isAdmin, 
     password
   })
@@ -43,6 +43,7 @@ const registerUser = asyncHandler(async (req, res) => {
       dob: user.dob,
       balance: user.balance,
       isAdmin: user.isAdmin,
+      isActive: user.isActive,
       token: generateToken(user._id),
     })
   } else {
@@ -55,7 +56,7 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   GET /api/users
 // @access  Admin
 const getUsers = asyncHandler(async (req, res) => {
-  const users = await User.find({})
+  const users = await User.find({}).select('-password')
   res.json(users)
 })
 
@@ -84,9 +85,10 @@ const updateUser = asyncHandler(async (req, res) => {
     user.lastname = req.body.lastname || user.lastname
     user.othername = req.body.othername || user.othername
     user.dob = req.body.dob || user.dob
+    user.balance = req.body.balance || user.balance
     user.gender = req.body.gender || user.gender
     user.phone = req.body.phone || user.phone
-    user.active = req.body.active || user.active
+    user.isActive = req.body.isActive || user.isActive
     user.isAdmin = req.body.isAdmin || user.isAdmin
     user.email = req.body.email || user.email
 
@@ -99,6 +101,8 @@ const updateUser = asyncHandler(async (req, res) => {
       othername: updatedUser.othername,
       email: updatedUser.email,
       phone: updatedUser.phone,
+      balance: updatedUser.balance,
+      isActive: updatedUser.isActive,
       gender: updatedUser.gender,
       dob: updatedUser.dob,
       isAdmin: updatedUser.isAdmin,
@@ -141,9 +145,10 @@ const authUser = asyncHandler(async (req, res) => {
       email: user.email,
       phone: user.phone,
       gender: user.gender,
+      balance: user.balance,
       dob: user.dob,
       isAdmin: user.isAdmin,
-      active: user.active,
+      isActive: user.isActive,
       token: generateToken(user._id),
     })
   } else {
@@ -168,8 +173,9 @@ const getUserProfile = asyncHandler(async (req, res) => {
       phone: user.phone,
       gender: user.gender,
       dob: user.dob,
+      balance: user.balance,
       isAdmin: user.isAdmin,
-      active: user.active,
+      isActive: user.isActive,
     })
   } else {
     res.status(404)
@@ -185,15 +191,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
 
   if (user) {
-    user.firstname = req.body.firstname || user.firstname
-    user.lastname = req.body.lastname || user.lastname
     user.othername = req.body.othername || user.othername
     user.dob = req.body.dob || user.dob
     user.gender = req.body.gender || user.gender
-    user.phone = req.body.phone || user.phone
-    user.active = req.body.active || user.active
-    user.isAdmin = req.body.isAdmin || user.isAdmin
-    user.email = req.body.email || user.email
 
     if (req.body.password) {
       user.password = req.body.password
@@ -203,15 +203,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
     res.json({
       _id: updatedUser._id,
-      firstname: updatedUser.firstname,
-      lastname: updatedUser.lastname,
       othername: updatedUser.othername,
-      email: updatedUser.email,
-      phone: updatedUser.phone,
       gender: updatedUser.gender,
       dob: updatedUser.dob,
-      active: updatedUser.active,
-      isAdmin: updatedUser.isAdmin,
       token: generateToken(updatedUser._id),
     })
   } else {
