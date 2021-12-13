@@ -1,6 +1,15 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+const BalanceSchema = mongoose.Schema({
+  amountBalance: { type: Number, required: true, default: 0.0 },
+  deposit: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'Deposit',
+  },
+})
+
 const UserSchema = mongoose.Schema(
   {
     firstname: {
@@ -45,11 +54,6 @@ const UserSchema = mongoose.Schema(
       type: Number,
       required: true,
       default: 0.0,
-    },
-    isAdmin: {
-      type: Boolean,
-      required: true,
-      default: false,
     },
   },
   {

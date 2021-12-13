@@ -10,7 +10,7 @@ const createDeposit = asyncHandler(async (req, res) => {
     amount,
   } = req.body
 
-  if (amount && amount.length === 0) {  //Prevent amount from being 0.0 naira
+  if (amount <= 0) {  //Prevent amount from being 0.0  or negative naira
     res.status(400)
     throw new Error('Deposit must be greated that 0.0')
     return
@@ -33,7 +33,7 @@ const createDeposit = asyncHandler(async (req, res) => {
 const getDepositById = asyncHandler(async (req, res) => {
   const deposit = await Deposit.findById(req.params.id).populate(
     'user',
-    'firstname lastname email balance'
+    'firstname lastname'
   ).populate('amount transactionTime').select('user deposit')
 
   if (deposit) {
@@ -46,10 +46,10 @@ const getDepositById = asyncHandler(async (req, res) => {
 
 
 // @desc    Get all Deposits made by a specified user
-// @route   GET /api/deposits/:user_id
+// @route   GET /api/deposits
 // @access  Authenticated user/Admin
 const getDeposits = asyncHandler(async (req, res) => {
-  const deposits = await Deposit.find({ user: req.user._id})
+  const deposits = await Deposit.find({ user: req.user._id })
     .populate('user', 'firstname')
   res.json(deposits)
 })
@@ -59,5 +59,4 @@ module.exports = {
   createDeposit,
   getDepositById,
   getDeposits,
-  
 }

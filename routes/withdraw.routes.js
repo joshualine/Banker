@@ -8,19 +8,14 @@ const {
 const router = require("express").Router();
 const { protected, admin } = require('../middlewares/auth.middleware');
 
-//Add Withdrawal
+//Add Withdrawal      //Get all withrawal made by the user
 router.route('/')
-  .post(createWithdraw).get(getWithdraws);
+  .post(createWithdraw)
+  .get(protected, getWithdraws);
 
-//Get A Specified Withdrawal done by a particular user
+//Get A Specified Withdrawal done by the user
 router.route('/:id')
   .get(getWithdrawById);
-
-//Get All Withdrawal by a specified user
-// router.route('/mywithdraw')
-//   .get(getMyWithdraw)
-
-
 
 
 module.exports = router;

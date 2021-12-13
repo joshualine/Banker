@@ -2,7 +2,7 @@ const Withdraw = require('../models/withdraw.model');
 const asyncHandler = require('express-async-handler');
 
 // @description     Create new Withdraw
-// @route           POST /api/withdraw
+// @route           POST /api/withdraws
 // @access          Authenticated User/ Admin
 const createWithdraw = asyncHandler(async (req, res) => {
   const {
@@ -10,14 +10,13 @@ const createWithdraw = asyncHandler(async (req, res) => {
     amount,
   } = req.body
 
-  if (amount && amount.length === 0) {  //Prevent amount from being 0.0 naira
+  if (amount <= 0) {  //Prevent amount from being 0.0 or negative naira
     res.status(400)
-    throw new Error('Withdrawal must be greated that 0.0')
+    throw new Error('Withdraw must be greater than 0.0')
     return
   } else {
     const withdraw = new Withdraw({
       amount,
-      // user: req.user._id,
       user
     })
 
@@ -36,8 +35,8 @@ const getWithdrawById = asyncHandler(async (req, res) => {
       'user',
       'firstname lastname'
     )
-    // .populate('amount transactionTime')
-    // .select('user withdraw')
+    .populate('amount transactionTime')
+    .select('user withdraw')
 
   if (withdraw) {
     res.json(withdraw)
@@ -48,19 +47,11 @@ const getWithdrawById = asyncHandler(async (req, res) => {
 })
 
 
-// @desc    Get logged in user withdraws
-// @route   GET /api/withdraws/mywithdraw
-// @access  Authenticated user
-const getMyWithdraw = asyncHandler(async (req, res) => {
-  const Withdraw = await Withdraw.find({ user: req.user._id })
-  res.json(Withdraw)
-})
-
-// @desc    Get all withrdaw
+// @desc    Get all withrdaw made by a specified user
 // @route   GET /api/withrdaws
-// @access  Admin
+// @access  Authenticated user/Admin
 const getWithdraws = asyncHandler(async (req, res) => {
-  const withdraws = await Withdraw.find({}).populate('user', 'id firstname')
+  const withdraws = await Withdraw.find({ user: req.user._id }).populate('user', 'firstname')
   res.json(withdraws)
 })
 
@@ -68,6 +59,4 @@ module.exports = {
   createWithdraw,
   getWithdrawById,
   getWithdraws,
-  getMyWithdraw
-
 }

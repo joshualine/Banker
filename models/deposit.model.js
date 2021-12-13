@@ -6,7 +6,7 @@ const DepositSchema = mongoose.Schema({
     required: [true, 'Deposit must be performed by a particular user'],
     ref: 'User',
   },
-  amount: { type: Number, required: true, default: 0.0 },
+  amount: { type: Number, required: [true, 'Deposit must have amount'] },
 
   isSuccesful: {
     type: Boolean,
