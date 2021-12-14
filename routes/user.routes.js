@@ -7,30 +7,37 @@ const {
   registerUser,
   getUserById,
   updateUser,
-  deleteUser } = require('../controllers/user.controller');
+  deleteUser, 
+  disableUser} = require('../controllers/user.controller');
 const router = require("express").Router();
 const { protected, admin } = require('../middlewares/auth.middleware');
 
-
-//Get All Users   //Add User
+//---------------------------------------------------------------------------
+   
 router.route('/')
-  .get(getUsers)
-  .post(registerUser);
+  .get(getUsers)                          //Get All Users
+  .post(registerUser);                    //Add User
 
-router.post('/login', authUser)
-// router.route('/login').post(authUser)
+router
+.post('/login', authUser)
 
+//---------------------------------------------------------------------------
 router
   .route('/profile')
-  .get(protected, getUserProfile)
-  .put(protected, updateUserProfile)
+  .get(protected, getUserProfile)           //Get user profile
+  .put(protected, updateUserProfile)        //Update User profile
 
-//Get One User  //Update User   //Delete User
+//---------------------------------------------------------------------------
 router
   .route('/:id')
-  .get(protected, getUserById)
-  .put(protected, updateUser)
-  .delete(protected, admin, deleteUser)
+  .get(protected, getUserById)              //Get One User 
+  .put(protected, updateUser)               //Update User 
+  .delete(protected, admin, deleteUser)      //Delete User
+
+//--------------------------------------------------------------------------
+router
+  .route('/:id/disable')
+  .put(protected, admin, disableUser);        //admin Disable a User account
 
 
 
