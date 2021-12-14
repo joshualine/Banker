@@ -4,7 +4,6 @@ const {
   getTransactionById, 
   makeWithdrawal, 
   makeTransfer, 
-  getDeposits,
   reverseTransfer,
 } = require('../controllers/transactions.controller');
 
@@ -24,7 +23,6 @@ router.route('/deposits')
   // .get(protected, getDeposits)
   .post(protected,  makeDeposit)
   
-
 //Make Withdrawal
 router.route('/withdraws')
   .post(protected, makeWithdrawal);
@@ -36,10 +34,6 @@ router.route('/transfers')
 // Admin reverse transaction/transfer
 router.route('/:id/reverse')
   .delete(protected, reverseTransfer)
-
-
-
-
 
 
 module.exports = router;
