@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+
 const TransferSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -8,16 +9,13 @@ const TransferSchema = mongoose.Schema({
   },
   amount: { type: Number, required: [true, 'Transfer must have amount'] },
 
-  receiver: [
+  receiver: 
     {
-      user: {
-        type: mongoose.Schema.Types,
-        required: [true, 'Transfer must be made to a user'],
-        ref: 'User',
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      required: [true, 'Transfer must be made to a user'],
+      ref: 'User',
     },
-  ],
-
+ 
   isSuccesful: {
     type: Boolean,
     required: true,

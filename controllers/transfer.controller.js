@@ -55,9 +55,25 @@ const getTransfers = asyncHandler(async (req, res) => {
   res.json(transfers)
 })
 
+// @desc    Reverse Transfer
+// @route   DELETE /api/transfers/:id
+// @access  Admin
+const reverseTransfer = asyncHandler(async (req, res) => {
+  const transfer = await Transfer.findById(req.params.id)
+
+  if (transfer) {
+    await transfer.remove()
+    res.json({ message: 'Transfer Reversed' })
+  } else {
+    res.status(404)
+    throw new Error('Transfer not found')
+  }
+})
+
 
 module.exports = {
   createTransfer,
   getTransferById,
   getTransfers,
+  reverseTransfer,
 }
