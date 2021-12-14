@@ -13,9 +13,9 @@ const createStatement = asyncHandler(async (req, res) => {
 
   const statement = new AccountStatement({
     user,
-    transfer,
-    withdraw,
-    deposit,
+    // transfer,
+    // withdraw,
+    // deposit,
   })
 
   const createdStatement = await statement.save()

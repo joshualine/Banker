@@ -33,23 +33,23 @@ const TransactionSchema = mongoose.Schema({
     ref: 'User',
   },
 
-  // transfer: [TransferSchemaw],
+  // transfer: [TransferSchema],
 
   transfer: [{
     type: mongoose.Schema.Types.ObjectId,
     required: [true, 'Transaction must be performed by a particular user'],
     ref: 'Transfer',
   }],
-  deposit: [{
-    type: mongoose.Schema.Types.ObjectId,
-    required: [true, 'Transaction must be performed by a particular user'],
-    ref: 'Deposit',
-  }],
-  withdraw: [{
-    type: mongoose.Schema.Types.ObjectId,
-    required: [true, 'Transaction must be performed by a particular user'],
-    ref: 'Withdraw',
-  }],
+  // deposit: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   required: [true, 'Transaction must be performed by a particular user'],
+  //   ref: 'Deposit',
+  // }],
+  // withdraw: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   required: [true, 'Transaction must be performed by a particular user'],
+  //   ref: 'Withdraw',
+  // }],
 
   // transfer: [Transfer],
   // withdraw: [Withdraw],
