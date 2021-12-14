@@ -76,3 +76,5 @@ npm install
 ```
 npm run dev
 ```
+
+Copyright (c) 2021 Joshua Chinwendu
