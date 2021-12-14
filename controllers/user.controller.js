@@ -113,6 +113,26 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc    Disable user account
+// @route   PUT /api/users/:id/disable
+// @access  Admin
+const disableUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id)
+
+  if (user) {
+    if (user.isActive == true) {
+      user.isActive = false;
+      const updatedUser = await user.save()
+      res.json({ message: "user has been disabled" })
+    } else {
+      res.json({ message: "The user is already disabled" })
+    }
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+})
+
 
 // @desc    Delete user
 // @route   DELETE /api/users/:id
@@ -221,6 +241,8 @@ module.exports = {
   getUserById,
   updateUser,
   deleteUser,
+
+  disableUser,
 
   authUser,
   getUserProfile,
