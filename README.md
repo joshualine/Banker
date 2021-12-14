@@ -29,28 +29,28 @@ jerry@example.com (Customer)
 ```
 
 
-| Methods | Routes            | Description                           | Auth Roles |
-|---------|-------------------|---------------------------------------|------------|
-| POST    | api/users         | Create a user account                 | Admin      |
-| GET     | api/users         | Get all users acoount                 | Admin      |
-| GET     | api/users/:id     | Get a specified user                  | User/Admin |
-| PUT     | api/users/:id     | Disable an account                    | Admin      |
-| DELETE  | api/users/:id     | Delete a user account                 | Admin      |
-| POST    | api/users/login   | user login                            | None       |
-| GET     | api/users/profile | Get user profile                      | User       |
-|         |                   |                                       |            |
-| POST    | api/deposits      | Make a deposit to a specified account | User       |
-| GET     | api/deposits      | Get all deposits made by the user     | User/Admin |
-| GET     | api/deposits/:id  | Get a specified deposit               | User/Admin |
-|         |                   |                                       |            |
-| POST    | api/withdraws     | Make a withdrawal to an account       | User       |
-| GET     | api/withdraws     | Get all withdrawals made by a user    | User/Admin |
-| GET     | api/withdraws/:id | Get a specified withdrawal            | User/Admin |
-|         |                   |                                       |            |
-| POST    | api/transfers     | Make a transfer to an account         | User       |
-| GET     | api/transfers     | Get all transfers made by a user      | User/Admin |
-| GET     | api/transfers/:id | Get a specified transfer              | User/Admin |
-| DELETE  | api/transfers/:id | Reverse transfer                      | Admin      |
+| Methods | Routes                         | Description                    | Auth Roles |
+|---------|--------------------------------|--------------------------------|------------|
+| POST    | api/users                      | Create a user account          | Admin      |
+| GET     | api/users                      | Get all users accounts         | Admin      |
+| GET     | api/users/:id                  | Get a specified user           | User/Admin |
+| PUT     | api/users/:id                  | Disable an account             | Admin      |
+| DELETE  | api/users/:id                  | Delete a user account          | Admin      |
+|         |                                |                                |            |
+| POST    | api/users/login                | user login                     | None       |
+| GET     | api/users/profile              | Get user profile               | User       |
+|         |                                |                                |            |
+| POST    | api/transactions/deposits      | Make a deposit                 | User       |
+| GET     | api/transactions/deposits/:id  | Get a specified deposit        | User/Admin |
+|         |                                |                                |            |
+| POST    | api/transactions/withdraws     | Make a withdrawal from account | User       |
+| GET     | api/transactions/withdraws/:id | Get a specified withdrawal     | User/Admin |
+|         |                                |                                |            |
+| POST    | api/transactions/transfers     | Make a transfer to an account  | User       |
+| GET     | api/transactions/transfers/:id | Get a specified transfer       | User/Admin |
+|         |                                |                                |            |
+| GET     | api/transactions               | Get all transactions done      | User       |
+| DELETE  | api/transactions/:id/reverse   | Reverse transfer               | Admin      |
 
 
 ### Env Variables

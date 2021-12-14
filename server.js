@@ -5,9 +5,6 @@ const connectDB = require('./configs/mongodb.config')
 
 // Importing routes
 const userRoutes = require('./routes/user.routes')  //user routes
-const depositRoutes = require('./routes/deposit.routes'); //deposit routes
-const withdrawRoutes = require('./routes/withdraw.routes');
-const transferRoutes = require('./routes/transfer.routes');
 const transactionRoutes = require('./routes/transactions.routes');
 
 
@@ -22,9 +19,6 @@ app.use(express.json());
 
 // Using routes
 app.use('/api/users', userRoutes);
-app.use('/api/deposits', depositRoutes);
-app.use('/api/withdraws', withdrawRoutes);
-app.use('/api/transfers', transferRoutes);
 app.use('/api/transactions', transactionRoutes);
 
 const PORT = process.env.PORT || 5000

@@ -99,11 +99,10 @@ const getTransactionById = asyncHandler(async (req, res) => {
 // @access  admin
 const reverseTransfer = asyncHandler(async (req, res) => {
   const transaction = await Transaction.findById(req.params.id)
-  // .populate('amount transactionTime').select('user transaction')
 
   if (transaction) {
     await transaction.remove()
-    res.json({ message: 'Transfer reversed' })
+    res.json({ message: 'Transaction reversed' })
   } else {
     res.status(404)
     throw new Error('transaction not found')
